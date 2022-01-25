@@ -1,6 +1,7 @@
 package com.kawaii.vk_info;
 
 import static com.kawaii.vk_info.utils.NetworkUtils.generateURL;
+import static com.kawaii.vk_info.utils.NetworkUtils.getResponseFromURL;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,7 +32,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 URL generatedURL = generateURL(searchField.getText().toString());
-                result.setText(generatedURL.toString());
+
+                String response = null;
+                try {
+                    response = getResponseFromURL(generatedURL);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                result.setText(response);
 
             }
         };
